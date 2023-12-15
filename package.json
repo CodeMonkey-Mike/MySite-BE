@@ -1,0 +1,111 @@
+{
+  "name": "mikeneder-be",
+  "version": "0.1.0",
+  "description": "mikeneder service",
+  "engines": {
+    "node": ">=12.x"
+  },
+  "scripts": {
+    "local": "NODE_ENV=development nodemon",
+    "dev": "npx run-script-os",
+    "dev:windows": "SET NODE_ENV=development&& ts-node src/server.ts",
+    "dev:default": "NODE_ENV=development ts-node src/server.ts",
+    "build": "npx run-script-os",
+    "build:windows": "SET NODE_ENV=production&& tsc --project .",
+    "build:default": "NODE_ENV=production tsc --project .",
+    "start": "ts-node dist/server.js",
+    "m:g": "typeorm migration:create -n",
+    "format": "prettier --list-different 'src/**/*.{js,jsx,ts,tsx,json,htm,html}'",
+    "format:fix": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,htm,html}'",
+    "lint": "eslint src/* --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint src/* --ext .ts,.tsx,.js,.jsx --fix",
+    "release": "node scripts/autoTag.js",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/utils/ormconfig.ts",
+    "grantps": "chmod 755 ./localdb.sh",
+    "localdb": "yarn grantps && ./localdb.sh",
+    "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
+    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:show": "ts-node ./node_modules/typeorm/cli.js migration:show"
+  },
+  "license": "ISC",
+  "resolutions": {
+    "graphql-upload": "^11.0.0"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^5.7.0",
+    "@koa/cors": "^3.1.0",
+    "@types/email-templates": "^8.0.3",
+    "@types/graphql-upload": "^8.0.4",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/koa-static": "^4.0.1",
+    "apollo-server-koa": "^2.16.1",
+    "class-validator": "^0.12.2",
+    "dotenv": "^8.2.0",
+    "email-templates": "^8.0.4",
+    "git-branch-is": "^4.0.0",
+    "graphql": "^15.3.0",
+    "graphql-upload": "^11.0.0",
+    "handlebars": "^4.7.7",
+    "jest": "^26.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-compose": "^4.1.0",
+    "koa-jwt": "^4.0.1",
+    "koa-redis": "^4.0.1",
+    "koa-router": "^9.1.0",
+    "koa-session": "^6.0.0",
+    "koa-static": "^5.0.0",
+    "kors": "^1.0.0",
+    "node-cron": "^3.0.2",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.4.11",
+    "pg": "8.5.1",
+    "prettier": "^2.2.0",
+    "rand-token": "^1.0.1",
+    "reflect-metadata": "^0.1.10",
+    "slugify": "^1.6.6",
+    "type-graphql": "^1.0.0",
+    "typeorm": "0.2.37",
+    "uuid": "^8.3.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/jest": "^26.0.12",
+    "@types/koa-mount": "^4.0.0",
+    "@types/koa-redis": "^4.0.0",
+    "@types/koa-router": "^7.4.1",
+    "@types/koa-session": "^5.10.2",
+    "@types/node": "^8.0.29",
+    "@types/node-cron": "^3.0.7",
+    "@types/nodemailer": "^6.4.0",
+    "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "bcrypt": "^5.0.0",
+    "copyfiles": "^2.3.0",
+    "eslint": "^7.7.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "npm": "^6.14.8",
+    "run-script-os": "^1.1.4",
+    "ts-node": "3.3.0",
+    "typescript": "3.9.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "./node_modules/.bin/git-branch-is -r \"^((?!master).)*$\" && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,json}": [
+      "prettier --write"
+    ]
+  }
+}
